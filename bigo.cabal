@@ -1,0 +1,19 @@
+Name:                bigo
+Version:             0.0.1
+Synopsis:            Big O talk
+Description:         Big O talk
+License:             AllRightsReserved
+Author:              Tom Nielsen
+Maintainer:          tanielsen@gmail.com
+build-type:          Simple
+Cabal-Version:       >= 1.8
+
+Executable bigo
+   Main-Is: BigO.hs
+   ghc-options: -O2
+   Build-depends:   base                          >= 4.6        && < 5
+                  , arb-fft
+                  , text
+                  , probably-baysig
+                  , blaze-bootstrap
+                  , blaze-html
