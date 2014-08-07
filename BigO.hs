@@ -13,6 +13,10 @@ import qualified Data.Text.IO as T
 import           Text.Blaze.Html.Renderer.Text (renderHtml)
 import  Text.Blaze.Html.Radian
 import  Text.Blaze.Html.AngularJS
+import qualified Data.Vector as V
+import Numeric.FFT
+import Data.Complex
+
 dt = 0.001
 tmax = 1
 
@@ -27,7 +31,15 @@ ts = map (*dt) [0..(tmax/dt)]
 sins = map sinf ts
 
 main = do
-  T.writeFile "/tmp/bigo.html" $ inRadian $ scatterPlot 400 600 "sins" $ zip ts sins
+  wf <- sampleIO $ mapM (`normal` 0.5) sins
+  let v = V.fromList $ map (:+0) wf
+  fd <- fft v
+  let real_fd = map realPart $ V.toList fd
+      imag_fd = map imagPart $ V.toList fd
+  T.writeFile "/tmp/bigo.html" $ inRadian $ do
+         scatterPlot 400 600 "sins" $ zip ts wf
+         scatterPlot 400 600 "reals" $ zip [0..] real_fd
+         scatterPlot 400 600 "imags" $ zip [0..] imag_fd
   putStrLn "hello world"
 
 

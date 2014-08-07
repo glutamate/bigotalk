@@ -17,3 +17,4 @@ Executable bigo
                   , probably-baysig
                   , blaze-bootstrap
                   , blaze-html
+                  , vector
